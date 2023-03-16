@@ -1,7 +1,7 @@
 {
-  "name": "typescript-tailwind-webpack-starter",
+  "name": "weather",
   "version": "1.0.0",
-  "description": "A modern Webpack 5, Tailwind CSS 3, and TypeScript Web Apps Starter Template",
+  "description": "",
   "private": true,
   "scripts": {
     "start": "webpack serve --mode=development --open",
@@ -9,11 +9,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "Muhammad Ahsan Ayaz<ahsan.ubitian@gmail.com>",
+  "author": "dhritiman",
   "license": "MIT",
   "devDependencies": {
     "copy-webpack-plugin": "^10.1.0",
     "css-loader": "^6.5.1",
+    "date-fns": "^2.29.3",
     "html-webpack-plugin": "^5.5.0",
     "postcss": "^8.4.4",
     "postcss-loader": "^6.2.1",

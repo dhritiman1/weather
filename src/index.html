@@ -4,10 +4,69 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>w.ther</title>
+    <script src="bundle.js" defer></script>
   </head>
-  <body>
-    <h1 class="text-white bg-yellow-300 p-5">Code With Ahsan</h1>
-    <script src="./bundle.js"></script>
+  <body
+    class="bg-mainbg bg-no-repeat bg-fixed bg-cover bg-center font-montserrat select-none flex flex-col justify-center items-center"
+  >
+    <div class="header w-9.5/10 lg:w-9/10 flex justify-end py-3">
+      <div class="search-bar w-60 lg:w-80">
+        <input
+          type="text"
+          class="block w-full py-2 px-3 text-sm text-gray-900 rounded-2xl border-b-2 bg-transparent focus:outline-none dark:placeholder-gray-500 dark:text-black"
+          name="location"
+          id="location"
+          placeholder="search"
+        />
+      </div>
+    </div>
+    <div class="container w-9.5/10 lg:w-9/10">
+      <div class="top-container flex justify-between">
+        <div class="weather-details">
+          <div>
+            <p class="date text-2xl"></p>
+          </div>
+          <div><p class="location text-2xl"></p></div>
+          <div class="temp-box flex">
+            <div class="flex items-end py-3 lg:pb-4 pr-5">
+              <p class="text-sm">temperature</p>
+            </div>
+            <p
+              class="temperature text-9xl lg:text-[10rem] leading-none tracking-tighter"
+            ></p>
+          </div>
+
+          <div class="weather"></div>
+          <div class="image"></div>
+        </div>
+        <div class="information">
+          <div class="flex items-end">
+            <div class="flex">
+              <p class="text-[15px] pb-[3px] pr-[12px]">humidity</p>
+            </div>
+            <p class="humidity text-2xl"></p>
+            <div class="flex items-end">
+              <p class="text-[15px] pb-[3px]">%</p>
+            </div>
+          </div>
+          <div class="flex">
+            <p class="rain"></p>
+          </div>
+          <div class="flex">
+            <div class="flex items-end">
+              <div class="flex">
+                <p class="text-[15px] pb-[3px] pr-[12px]">wind speed</p>
+              </div>
+            </div>
+            <p class="wind text-2xl"></p>
+            <div class="flex items-end">
+              <p class="text-[15px] pl-[6px] pb-[2px]">km/h</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="weekly-forecast"></div>
+    </div>
   </body>
 </html>
