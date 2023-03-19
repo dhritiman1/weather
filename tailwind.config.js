@@ -19,6 +19,10 @@ module.exports = {
         "9/10": "calc(100vw - 180px)",
         "9.5/10": "calc(100vw - 80px)",
       },
+      height: {
+        header: "62px",
+        container: "calc(100vh - 62px)",
+      },
     },
   },
   variants: {

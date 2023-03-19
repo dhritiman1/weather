@@ -2,6 +2,7 @@ import APIFunctions from "./APIFunctions";
 import { format } from "date-fns";
 
 export interface Data {
+  status: number;
   coord: {
     lon: number;
     lat: number;
@@ -12,7 +13,6 @@ export interface Data {
     description: string;
     icon: string;
   }[];
-  base: string;
   main: {
     temp: number;
     feels_like: number;
@@ -41,6 +41,10 @@ export interface Data {
   };
 }
 
+interface ForecastData {
+  cod: number;
+}
+
 const DOMFunc = () => {
   const api = APIFunctions();
 
@@ -48,16 +52,14 @@ const DOMFunc = () => {
     const input: HTMLInputElement = document.querySelector("#location");
     input.addEventListener("keypress", async (e: KeyboardEvent) => {
       if (e.key === "Enter") {
-        const data = (await api.getCurrDayData(
-          api.createLocationUrl(input.value)
-        )) as Data;
-        renderPage(data, "celsius");
+        getDataAndRender(input.value.trim());
         input.value = "";
+        e.preventDefault();
       }
     });
   })();
 
-  const renderPage = (data: Data, metric: string) => {
+  const renderPage = (data: Data, unit: string) => {
     const date = document.querySelector(".date");
     const location = document.querySelector(".location");
     const weather = document.querySelector(".weather");
@@ -80,11 +82,49 @@ const DOMFunc = () => {
     console.log(data);
   };
 
-  const onload = (async () => {
-    const data = (await api.getCurrDayData(
-      api.createLocationUrl("Golaghat")
+  const renderForecast = async (data: ForecastData, unit: string) => {
+    console.log(data);
+  };
+
+  const getDataAndRender = async (location: string) => {
+    const data = (await api.getData(
+      api.createLocationUrl(`${location}`)
     )) as Data;
-    renderPage(data, "celsius");
+
+    if (data.status !== 404) {
+      renderPage(data, "metric");
+      closeError();
+    } else {
+      console.log("error occurred");
+      openError();
+    }
+  };
+
+  const closeError = () => {
+    const error = document.querySelector(".error404");
+    if (!error.classList.contains("hidden")) {
+      error.classList.toggle("hidden");
+    }
+    const container = document.querySelector(".container");
+    if (container.classList.contains("hidden")) {
+      container.classList.toggle("hidden");
+    }
+  };
+
+  const openError = () => {
+    const error = document.querySelector(".error404");
+    if (error.classList.contains("hidden")) {
+      error.classList.toggle("hidden");
+    }
+    const container = document.querySelector(".container");
+    if (!container.classList.contains("hidden")) {
+      container.classList.toggle("hidden");
+    }
+  };
+
+  const onload = (async () => {
+    getDataAndRender("Golaghat");
+    closeError();
   })();
 };
 

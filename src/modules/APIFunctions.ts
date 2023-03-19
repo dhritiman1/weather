@@ -16,11 +16,11 @@ const APIFunc = () => {
   };
 
   const createForecastUrl = (
-    lon: string,
-    lat: string,
+    lon: number,
+    lat: number,
     unit: string = "metric"
-  ) => {
-    return `api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=${unit}&appid=8249207ed82958685fae1285bcc745c8`;
+  ): string => {
+    return `api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&APPID=8249207ed82958685fae1285bcc745c8`;
   };
 
   const createLongLatUrl = (
@@ -28,13 +28,18 @@ const APIFunc = () => {
     lat: number,
     unit: string = "metric"
   ): string => {
-    return `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=${unit}&appid=8249207ed82958685fae1285bcc745c8`;
+    return `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=${unit}&APPID=8249207ed82958685fae1285bcc745c8`;
   };
 
-  const getCurrDayData = async (url: string) => {
-    const data = await fetch(url, { mode: "cors" });
-    const dataToJson: object = await data.json();
-    return dataToJson;
+  const getData = async (url: string): Promise<object> => {
+    const data = await fetch(url);
+    if (data.status >= 200 && data.status <= 299) {
+      const dataToJson = await data.json();
+      return dataToJson;
+    } else {
+      console.log(data.status, data.statusText);
+      return { status: 404 };
+    }
   };
 
   return {
@@ -42,7 +47,7 @@ const APIFunc = () => {
     createLocationUrl,
     createLongLatUrl,
     createForecastUrl,
-    getCurrDayData,
+    getData,
   };
 };
 

@@ -8,7 +8,7 @@
     <script src="bundle.js" defer></script>
   </head>
   <body
-    class="bg-mainbg bg-no-repeat bg-fixed bg-cover bg-center font-montserrat select-none flex flex-col justify-center items-center"
+    class="bg-mainbg bg-no-repeat bg-fixed bg-cover bg-center font-montserrat select-none flex flex-col justify-center items-center h-screen"
   >
     <div class="header w-9.5/10 lg:w-9/10 flex justify-end py-3">
       <div class="search-bar w-60 lg:w-80">
@@ -21,24 +21,23 @@
         />
       </div>
     </div>
-    <div class="container w-9.5/10 lg:w-9/10">
+    <div class="container h-container w-9.5/10 lg:w-9/10">
       <div class="top-container flex justify-between">
         <div class="weather-details">
           <div>
             <p class="date text-2xl"></p>
           </div>
           <div><p class="location text-2xl"></p></div>
-          <div class="temp-box flex">
+          <div class="temp-box pt-3 flex">
             <div class="flex items-end py-3 lg:pb-4 pr-5">
               <p class="text-sm">temperature</p>
             </div>
             <p
-              class="temperature text-9xl lg:text-[10rem] leading-none tracking-tighter"
+              class="temperature text-9xl lg:text-[10rem] leading-none tracking-tighter font-thin"
             ></p>
           </div>
 
           <div class="weather"></div>
-          <div class="image"></div>
         </div>
         <div class="information">
           <div class="flex items-end">
@@ -67,6 +66,12 @@
         </div>
       </div>
       <div class="weekly-forecast"></div>
+    </div>
+    <div
+      class="error404 flex flex-col items-center justify-center w-9.5/10 lg:w-9/10 h-container pb-[8rem] hidden"
+    >
+      <p class="lg:text-[12rem] md:text-[9rem] text-8xl font-thin">error 404</p>
+      <p class="text-lg lg:text-xl italic">location not found</p>
     </div>
   </body>
 </html>
