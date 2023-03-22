@@ -10,7 +10,16 @@
   <body
     class="bg-mainbg bg-no-repeat bg-fixed bg-cover bg-center font-montserrat select-none flex flex-col justify-center items-center h-screen"
   >
-    <div class="header w-9.5/10 lg:w-9/10 flex justify-end py-3">
+    <div
+      class="header w-9.5/10 lg:w-9/10 flex justify-between items-center py-3"
+    >
+      <div class="units flex text-sm">
+        <p class="cel underline cursor-pointer active:opacity-40">celsius</p>
+        <p class="px-1">/</p>
+        <p class="fahren opacity-70 cursor-pointer active:opacity-40">
+          fahrenheit
+        </p>
+      </div>
       <div class="search-bar w-60 lg:w-80">
         <input
           type="text"
@@ -44,7 +53,7 @@
             <div class="flex">
               <p class="text-[15px] pb-[3px] pr-[12px]">humidity</p>
             </div>
-            <p class="humidity text-2xl"></p>
+            <p class="humidity font-light text-2xl"></p>
             <div class="flex items-end">
               <p class="text-[15px] pb-[3px]">%</p>
             </div>
@@ -58,9 +67,9 @@
                 <p class="text-[15px] pb-[3px] pr-[12px]">wind speed</p>
               </div>
             </div>
-            <p class="wind text-2xl"></p>
+            <p class="wind font-light text-2xl"></p>
             <div class="flex items-end">
-              <p class="text-[15px] pl-[6px] pb-[2px]">km/h</p>
+              <p class="speed text-[15px] pl-[6px] pb-[2px]">km/h</p>
             </div>
           </div>
         </div>

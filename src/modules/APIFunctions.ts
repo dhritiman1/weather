@@ -15,14 +15,6 @@ const APIFunc = () => {
     return `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=${unit}&APPID=8249207ed82958685fae1285bcc745c8`;
   };
 
-  const createForecastUrl = (
-    lon: number,
-    lat: number,
-    unit: string = "metric"
-  ): string => {
-    return `api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&APPID=8249207ed82958685fae1285bcc745c8`;
-  };
-
   const createLongLatUrl = (
     lon: number,
     lat: number,
@@ -46,7 +38,6 @@ const APIFunc = () => {
     getLocation,
     createLocationUrl,
     createLongLatUrl,
-    createForecastUrl,
     getData,
   };
 };

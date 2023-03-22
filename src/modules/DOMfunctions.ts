@@ -41,58 +41,68 @@ export interface Data {
   };
 }
 
-interface ForecastData {
-  cod: number;
-}
-
 const DOMFunc = () => {
   const api = APIFunctions();
+  let _location: string = "";
+  let _metric: boolean = true;
 
   const searchLoad = (() => {
     const input: HTMLInputElement = document.querySelector("#location");
     input.addEventListener("keypress", async (e: KeyboardEvent) => {
       if (e.key === "Enter") {
-        getDataAndRender(input.value.trim());
+        getDataAndRender(input.value.trim(), _metric ? "metric" : "imperial");
         input.value = "";
         e.preventDefault();
       }
     });
   })();
 
-  const renderPage = (data: Data, unit: string) => {
+  const renderPage = (data: Data) => {
     const date = document.querySelector(".date");
     const location = document.querySelector(".location");
     const weather = document.querySelector(".weather");
     const temperature = document.querySelector(".temperature");
     const humidity = document.querySelector(".humidity");
     const wind = document.querySelector(".wind");
+    const speed = document.querySelector(".speed");
 
     const dateinfo: Array<String> = format(new Date(), `EEEE dd MMM yy`).split(
       " "
     );
 
+    _location = data.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
     date.textContent = `${dateinfo[1]}${dateinfo[2]}\'${dateinfo[3]}`;
-    location.textContent = data.name
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "");
+    location.textContent = _location;
     temperature.textContent = `${data.main.temp.toString()}°`;
     weather.textContent = data.weather[0].description;
     humidity.textContent = `${data.main.humidity.toString()}`;
-    wind.textContent = `${Math.round(data.wind.speed * 36) / 10}`;
+    if (_metric) {
+      wind.textContent = `${Math.round(data.wind.speed * 36) / 10}`;
+      speed.textContent = "km/h";
+    } else if (!_metric) {
+      wind.textContent = `${Math.round(data.wind.speed * 10) / 10}`;
+      speed.textContent = "mph";
+    }
+
     console.log(data);
   };
 
-  const renderForecast = async (data: ForecastData, unit: string) => {
-    console.log(data);
-  };
-
-  const getDataAndRender = async (location: string) => {
+  const getData = async (location: string, unit: string) => {
     const data = (await api.getData(
-      api.createLocationUrl(`${location}`)
+      api.createLocationUrl(location, unit)
     )) as Data;
 
+    return data;
+  };
+
+  const getDataAndRender = async (
+    location: string,
+    unit: string = "metric"
+  ) => {
+    const data = await getData(location, unit);
     if (data.status !== 404) {
-      renderPage(data, "metric");
+      renderPage(data);
       closeError();
     } else {
       console.log("error occurred");
@@ -121,6 +131,37 @@ const DOMFunc = () => {
       container.classList.toggle("hidden");
     }
   };
+
+  const toggle = (active: Element, inactive: Element) => {
+    if (!active.classList.contains("underline")) {
+      active.classList.toggle("underline");
+      active.classList.toggle("opacity-70");
+
+      inactive.classList.toggle("underline");
+      inactive.classList.toggle("opacity-70");
+    }
+  };
+
+  const switchUnits = (() => {
+    const cel = document.querySelector(".cel");
+    const fah = document.querySelector(".fahren");
+
+    cel.addEventListener("click", async () => {
+      toggle(cel, fah);
+      _metric = true;
+      const data = await getData(_location, "metric");
+      renderPage(data);
+      console.log("cel activated");
+    });
+
+    fah.addEventListener("click", async () => {
+      toggle(fah, cel);
+      _metric = false;
+      const data = await getData(_location, "imperial");
+      renderPage(data);
+      console.log("fah activated");
+    });
+  })();
 
   const onload = (async () => {
     getDataAndRender("Golaghat");
