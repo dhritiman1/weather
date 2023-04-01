@@ -84,8 +84,6 @@ const DOMFunc = () => {
       wind.textContent = `${Math.round(data.wind.speed * 10) / 10}`;
       speed.textContent = "mph";
     }
-
-    console.log(data);
   };
 
   const getData = async (location: string, unit: string) => {
@@ -105,15 +103,16 @@ const DOMFunc = () => {
       renderPage(data);
       closeError();
     } else {
-      console.log("error occurred");
       openError();
     }
   };
 
   const closeError = () => {
-    const error = document.querySelector(".error404");
+    const error = document.querySelector(".error404") as HTMLElement;
     if (!error.classList.contains("hidden")) {
       error.classList.toggle("hidden");
+      error.style.opacity = "0";
+      error.classList.toggle("translate-y-[100vh]");
     }
     const container = document.querySelector(".container");
     if (container.classList.contains("hidden")) {
@@ -122,9 +121,12 @@ const DOMFunc = () => {
   };
 
   const openError = () => {
-    const error = document.querySelector(".error404");
+    const error = document.querySelector(".error404") as HTMLElement;
+
     if (error.classList.contains("hidden")) {
       error.classList.toggle("hidden");
+      error.style.opacity = "1";
+      error.classList.toggle("translate-y-0");
     }
     const container = document.querySelector(".container");
     if (!container.classList.contains("hidden")) {
@@ -151,7 +153,6 @@ const DOMFunc = () => {
       _metric = true;
       const data = await getData(_location, "metric");
       renderPage(data);
-      console.log("cel activated");
     });
 
     fah.addEventListener("click", async () => {
@@ -159,7 +160,6 @@ const DOMFunc = () => {
       _metric = false;
       const data = await getData(_location, "imperial");
       renderPage(data);
-      console.log("fah activated");
     });
   })();
 
